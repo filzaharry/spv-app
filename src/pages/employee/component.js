@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { Fragment } from "react";
 import { Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -14,7 +15,7 @@ const mapStateToProps = (state) => {
 
 const EmpComponent = (props) => {
   const responseAPI = props.getKaryawanList.data;
-  console.log("response: ", responseAPI);
+  // console.log("response: ", responseAPI);
 
   return (
     <div className="text-center">
@@ -34,17 +35,11 @@ const EmpComponent = (props) => {
                     </div>
                     <div class="col-name">
                       <p class="employee-name">{getKaryawanList.name}</p>
-                      {/* <p class="employee-name">{getKaryawanList.jabatanId.nama_jab}</p> */}
-                      {/* {getKaryawanList &&
-                        getKaryawanList.map((jabatanId, index) => (
-                          <p key={index} class="employee-jabatan">
-                            {jabatanId.nama_jab}
-                          </p>
-                        ))} */}
+                      <p class="employee-nik">APK.{getKaryawanList.nik}</p>
                     </div>
                     <div class="col-time">
-                      <p class="employee-count">-33254733</p>
-                      <p class="employee-date">{getKaryawanList.tglMulai}</p>
+                      <p class="employee-count">{moment(getKaryawanList.tglMulai).subtract(10, 'days').calendar()}</p>
+                      <p class="employee-profil">Lihat Profil</p>
                     </div>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import PageNotFound from "./404";
+
 import Employee from "./employee";
 import Departemen from './departemen'
 import Home from './home'
@@ -15,7 +15,6 @@ import ForgetPassword from './forget'
 import Help from './help'
 
 export {
-  PageNotFound,
   Employee,
   Departemen,
   Home,

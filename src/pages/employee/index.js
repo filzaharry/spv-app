@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { karyawanAction } from "../../config/actions/karyawan";
 import EmpComponent from "./component";
@@ -19,10 +18,10 @@ class Employee extends Component {
     return (
       <Router>
           <Switch>
-            <Route path="/karyawan" exact component={EmpComponent} />
-            <Route path="/karyawan/terkirim" component={ValueCompleted} />
-            <Route path="/karyawan/:id" exact component={Profile} />
+            <Route path="/karyawan"  component={EmpComponent} />
+            <Route path="/karyawan/:id"  component={Profile} />
             <Route path="/karyawan/:id/nilai" component={ValueOfEmployee} />
+            <Route path="/karyawan/terkirim" component={ValueCompleted} />
           </Switch>
       </Router>
     );
