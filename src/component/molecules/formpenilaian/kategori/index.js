@@ -1,26 +1,23 @@
-import React from "react";
-import "./kategori.scss";
+import HasilKerja from "./hasilKerja";
+import Keterampilan from "./keterampilan";
+import TanggungJawab from "./tanggungJawab";
+import Kerjasama from "./kerjasama";
+import Kedisiplinan from "./kedisiplinan";
+import Kerajinan from "./kerajinan";
+import Ketelitian from "./ketelitian";
+import Kejujuran from "./kejujuran";
+import Loyalitas from "./loyalitas";
+import Inisiatif from "./inisiatif";
 
-const Kategori = (props) => {
-  return (
-    <div className="boxed">
-      <p>{props.kategori}</p>
-      <input type="radio" id="1" name="skills" value="1" />
-      <label for="1">1</label>
-
-      <input type="radio" id="2" name="skills" value="2" />
-      <label for="2">2</label>
-
-      <input type="radio" id="3" name="skills" value="3" />
-      <label for="3">3</label>
-
-      <input type="radio" id="4" name="skills" value="4" />
-      <label for="4">4</label>
-
-      <input type="radio" id="5" name="skills" value="5" />
-      <label for="5">5</label>
-    </div>
-  );
+export {
+  HasilKerja,
+  Keterampilan,
+  TanggungJawab,
+  Kerjasama,
+  Kedisiplinan,
+  Kerajinan,
+  Ketelitian,
+  Kejujuran,
+  Loyalitas,
+  Inisiatif,
 };
-
-export default Kategori;

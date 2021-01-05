@@ -1,0 +1,29 @@
+.periode {
+  box-shadow: 10px 10px 23px -7px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  max-width: 400px;
+  .col-date {
+    padding-left: 20px;
+    padding-top: 25px;
+  }
+  .period-text-1 {
+    font-size: 12px;
+    margin-top: -17px;
+  }
+  .period-text-2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: -17px;
+  }
+
+  .col-order {
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-left: 25px;
+    background-color:#98e7d1;
+    .period-order {
+        font-size: 40px;
+        color: black;
+    }
+  }
+}

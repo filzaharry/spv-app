@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import { karyawanAction } from "../../config/actions/karyawan";
 import EmpComponent from "./component";
 import Profile from "../profile";
-import { ValueCompleted } from "../../component";
-import ValueOfEmployee from "../value";
+import Periode from "../periode";
 
 class Employee extends Component {
   componentDidMount() {
@@ -18,10 +17,9 @@ class Employee extends Component {
     return (
       <Router>
           <Switch>
-            <Route path="/karyawan"  component={EmpComponent} />
-            <Route path="/karyawan/:id"  component={Profile} />
-            <Route path="/karyawan/:id/nilai" component={ValueOfEmployee} />
-            <Route path="/karyawan/terkirim" component={ValueCompleted} />
+            <Route path="/karyawan/:id/periode" component={Periode} />
+            <Route path="/karyawan/:id" component={Profile} />
+            <Route path="/karyawan" component={EmpComponent} />
           </Switch>
       </Router>
     );

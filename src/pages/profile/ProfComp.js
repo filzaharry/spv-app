@@ -61,7 +61,7 @@ const ProfileKaryawan = (props) => {
           <Button
             className="btn btn-primary btn-block"
             title="Nilai Karyawan"
-            onClick={()=> history.push(`/karyawan/${responseAPI._id}/nilai`)}
+            onClick={()=> history.push(`/karyawan/${responseAPI._id}/periode`)}
           />
         </Fragment>
       ) : (
