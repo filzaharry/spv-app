@@ -1,16 +1,16 @@
-import React, { Fragment, useState } from "react";
-import Saran from "./saran";
-import { Gap } from "../../atoms";
-import { Link, useHistory, useParams } from "react-router-dom";
+import React, { Fragment,  useState } from "react";
+import Saran from "../saran";
+import { Link, useParams } from "react-router-dom";
 import Axios from "axios";
-import { HasilKerja, Inisiatif, Kedisiplinan, Kejujuran, Kerajinan, Kerjasama, Ketelitian, Keterampilan, Loyalitas, TanggungJawab } from "./kategori";
-import { API_URL_SPV } from "../../../config/utils/constants";
-import Jumbotron from "../jumbotron";
+import { HasilKerja, Inisiatif, Kedisiplinan, Kejujuran, Kerajinan, Kerjasama, Ketelitian, Keterampilan, Loyalitas, TanggungJawab } from "../kategori";
+import { API_URL_SPV } from "../../../../config/utils/constants";
+import { Gap } from "../../../atoms";
+import Jumbotron from "../../jumbotron";
 
 
 
-
-const FormPenilaian = () => {
+const FormScoreEdit = (props) => {
+  const { id, spvId } = useParams();
   
   const [hasilKerja, setHasilKerja] = useState("");
   const [keterampilan, setKeterampilan] = useState("");
@@ -115,38 +115,34 @@ const FormPenilaian = () => {
     setError('')
   };
 
-
-  const history = useHistory();
-  const { id } = useParams();
-  const submitNilai = () => {
+  const updateNilai = () => {
     // console.log("id", id);
     const data = {
-      hasilKerja: hasilKerja*20,
-      keterampilan: keterampilan*20,
-      tanggungJawab: tanggungJawab*20,
-      kerjasama: kerjasama*20,
-      disiplin: disiplin*20,
-      kerajinan: kerajinan*20,
-      ketelitian: ketelitian*20,
-      kejujuran: kejujuran*20,
-      loyalitas: loyalitas*20,
-      inisiatif: inisiatif*20,
-      question1: question1*20,
-      question2: question2*20,
-      question3: question3*20,
-      question4: question4*20,
-      question5: question5*20,
-      rekomendasi: rekomendasi*20
+      hasilKerja: hasilKerja,
+      keterampilan: keterampilan,
+      tanggungJawab: tanggungJawab,
+      kerjasama: kerjasama,
+      disiplin: disiplin,
+      kerajinan: kerajinan,
+      ketelitian: ketelitian,
+      kejujuran: kejujuran,
+      loyalitas: loyalitas,
+      inisiatif: inisiatif,
+      question1: question1,
+      question2: question2,
+      question3: question3,
+      question4: question4,
+      question5: question5,
+      rekomendasi: rekomendasi
     }
 
     // console.log(data)
     
     Axios
-      .post(`${API_URL_SPV}periode/${id}`, data)
+      .put(`${API_URL_SPV}periode/${id}/nilaispv/${spvId}`, data)
       .then((result) => {
         if (result) {
           if(result.data){
-            history.push("nilai/terkirim");
             setHasilKerja("");
             setKeterampilan("");
             setTanggungJawab("");
@@ -175,8 +171,7 @@ const FormPenilaian = () => {
   return (
     <Fragment>
       <Jumbotron jumbotronTitle="Form Penilaian Karyawan" />
-    
-    <div className="container-sm justify-content-center">
+    <div className="container-sm mx-auto">
       <p className="font-weight-bold">KATEGORI</p>
       <div className="col-sm-12 pb-4">
         {error && (
@@ -187,16 +182,16 @@ const FormPenilaian = () => {
           )}
         
 
-        <HasilKerja  onChange={changeHasilKerja} kategori="Hasil Kerja / Kualitas Kerja" />
-        <Keterampilan  onChange={changeKeterampilan} kategori="Keterampilan Kerja" />
-        <TanggungJawab  onChange={changeTanggungJawab} kategori="Tanggung Jawab" />
-        <Kerjasama  onChange={changeKerjasama} kategori="Kerjasama dengan Rekan Kerja" />
-        <Kedisiplinan  onChange={changeDisiplin} kategori="Kedisiplinan" />
-        <Kerajinan  onChange={changeKerajinan} kategori="Kerajinan" />
-        <Ketelitian  onChange={changeKetelitian} kategori="Ketelitian" />
-        <Kejujuran  onChange={changeKejujuran} kategori="Kejujuran" />
-        <Loyalitas  onChange={changeLoyalitas} kategori="Loyalitas" />
-        <Inisiatif  onChange={changeInisiatif} kategori="Inisiatif/Prakarsa & Kreatif" />
+        <HasilKerja name="kategori" onChange={changeHasilKerja} kategori="Hasil Kerja / Kualitas Kerja" />
+        <Keterampilan name="kategori" onChange={changeKeterampilan} kategori="Keterampilan Kerja" />
+        <TanggungJawab name="kategori" onChange={changeTanggungJawab} kategori="Tanggung Jawab" />
+        <Kerjasama name="kategori" onChange={changeKerjasama} kategori="Kerjasama dengan Rekan Kerja" />
+        <Kedisiplinan name="kategori" onChange={changeDisiplin} kategori="Kedisiplinan" />
+        <Kerajinan name="kategori" onChange={changeKerajinan} kategori="Kerajinan" />
+        <Ketelitian name="kategori" onChange={changeKetelitian} kategori="Ketelitian" />
+        <Kejujuran name="kategori" onChange={changeKejujuran} kategori="Kejujuran" />
+        <Loyalitas name="kategori" onChange={changeLoyalitas} kategori="Loyalitas" />
+        <Inisiatif name="kategori" onChange={changeInisiatif} kategori="Inisiatif/Prakarsa & Kreatif" />
       </div>
       <hr className="bg-dark" />
       <p className="font-weight-bold">PERTANYAAN</p>
@@ -240,12 +235,12 @@ const FormPenilaian = () => {
         >
           Batal
         </Link>
-        <Link to="nilai/terkirim"
-          onClick={submitNilai}
+        <Link to={`${spvId}/terupdate`}
+          onClick={updateNilai}
           className="btn btn-primary ml-auto"
           style={{ width: "120px" }}
         >
-          Kirim
+          Update Nilai
         </Link>
       </div>
       <Gap height={50} />
@@ -254,4 +249,4 @@ const FormPenilaian = () => {
   );
 };
 
-export default FormPenilaian;
+export default FormScoreEdit;

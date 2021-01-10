@@ -8,7 +8,6 @@ import Departemen from "../departemen";
 import ValueHistory from "../history";
 import { Gap } from "../../component";
 import Help from "../help";
-import Periode from "../periode";
 
 const MainApp = () => {
   const token = localStorage.getItem('token')
@@ -19,7 +18,6 @@ const MainApp = () => {
     <Router>
       <BottomNav />
         <Switch>
-          <Route path="/periode" component={Periode} />
           <Route path="/karyawan" component={Employee} />
           <Route path="/departemen" component={Departemen} />
           <Route path="/riwayat-nilai" component={ValueHistory} />

@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { karyawanAction } from "../../config/actions/karyawan";
 import EmpComponent from "./component";
 import Profile from "../profile";
-import Periode from "../periode";
+import { ScoreList, SelectPeriode } from "..";
+import { FormPenilaian, FormScoreEdit, ValueCompleted, ValueUpdated } from "../../component";
 
 class Employee extends Component {
   componentDidMount() {
@@ -17,7 +18,12 @@ class Employee extends Component {
     return (
       <Router>
           <Switch>
-            <Route path="/karyawan/:id/periode" component={Periode} />
+            <Route path="/karyawan/:id/periode/:id/nilaispv/:spvId/terupdate" component={ValueUpdated} />
+            <Route path="/karyawan/:id/periode/:id/nilaispv/:spvId" component={FormScoreEdit} />
+            <Route path="/karyawan/:id/periode/:id/nilai/terkirim" component={ValueCompleted} />
+            <Route path="/karyawan/:id/periode/:id/nilaispv" component={FormPenilaian} />
+            <Route path="/karyawan/:id/periode/:id" component={ScoreList} />
+            <Route path="/karyawan/:id/periode" component={SelectPeriode} />
             <Route path="/karyawan/:id" component={Profile} />
             <Route path="/karyawan" component={EmpComponent} />
           </Switch>

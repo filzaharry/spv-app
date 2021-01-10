@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import Axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Gap } from "../../component";
 import moment from "moment";
 import "./departemen.scss"
@@ -44,7 +43,7 @@ const DetailDepartemen = (props) => {
               <h5 className="font-weight-bold">{karyawan.nama_dep}</h5>
 
               {data.karyawanId.map((karyawan) => (
-                <div class="employee" onClick={()=> props.history.push(`/karyawan/${karyawan._id}`)}>
+                <div class="employee" onClick={()=> history.push(`karyawan/${karyawan._id}`)}>
                   <div class="row">
                     <div class="col-name">
                       <p class="dep-employee-date">Tanggal Masuk : {moment(karyawan.tglMulai).subtract(10, 'days').calendar()}</p>

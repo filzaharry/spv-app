@@ -9,9 +9,11 @@ import HeroImg from "./images/hero-img.svg";
 import CardImgHello from "./images/card-hello.svg";
 import LoginBgMobile from "./images/login-bg.svg";
 import ForgetPwd from "./images/forgot-password.svg";
+import DataNotFound from "./images/data-not-found.svg";
 
 // import icon
 import HelpIC from "./icon/question-mark.svg";
+import RefreshIC from "./icon/refresh.svg";
 import SettingsIC from "./icon/mechanical-gears-.svg";
 import DashboardIC from "./icon/dashboard.svg";
 import KaryawanIC from "./icon/karyawan.svg";
@@ -42,9 +44,11 @@ export {
   HeaderImg,
   FooterBg,
   HelpSupportIC,
+  RefreshIC,
   ForgetPwd,
   HeroImg,
   CardImgHello,
+  DataNotFound,
   LoginBgMobile,
   Logo,
   HelpIC,

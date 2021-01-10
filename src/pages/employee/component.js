@@ -24,22 +24,22 @@ const EmpComponent = (props) => {
         <Fragment>
           {responseAPI &&
             responseAPI.map((getKaryawanList, index) => (
-              <Link key={index} to={`/karyawan/${getKaryawanList._id}`}>
-                <div class="employee">
-                  <div class="row">
-                    <div class="image-profile">
+              <Link key={index} to={`karyawan/${getKaryawanList._id}`}>
+                <div className="employee">
+                  <div className="row">
+                    <div className="image-profile">
                       <img
                         src={`http://localhost:4000/${getKaryawanList.image}`}
                         alt={getKaryawanList.name}
                       />
                     </div>
-                    <div class="col-name">
-                      <p class="employee-name">{getKaryawanList.name}</p>
-                      <p class="employee-nik">APK.{getKaryawanList.nik}</p>
+                    <div className="col-name">
+                      <p className="employee-name">{getKaryawanList.name}</p>
+                      <p className="employee-nik">APK.{getKaryawanList.nik}</p>
                     </div>
-                    <div class="col-time">
-                      <p class="employee-count">{moment(getKaryawanList.tglMulai).subtract(10, 'days').calendar()}</p>
-                      <p class="employee-profil">Lihat Profil</p>
+                    <div className="col-time">
+                      <p className="employee-count">{moment(getKaryawanList.tglMulai).subtract(10, 'days').calendar()}</p>
+                      <p className="employee-profil">Lihat Profil</p>
                     </div>
                   </div>
                 </div>

@@ -15,6 +15,7 @@ import About from './about'
 import ForgetPassword from './forget'
 import Help from './help'
 import Periode from './periode'
+import SelectPeriode from './selectperiode'
 
 export {
   Employee,
@@ -32,5 +33,6 @@ export {
   About,
   ForgetPassword,
   Help,
-  Periode
+  Periode,
+  SelectPeriode
 };

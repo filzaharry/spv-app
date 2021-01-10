@@ -16,9 +16,9 @@ const Home = () => {
   return (
     <Fragment>
       <Jumbotron jumbotronTitle="Selamat Datang, Supervisor" />
-      <section class="container">
-        <div class="row justify-content-center" onChange={updateKaryawan}>
-          <div class="border-bottom pb-4 col-12 section-2">
+      <section className="container">
+        <div className="row justify-content-center" onChange={updateKaryawan}>
+          <div className="border-bottom pb-4 col-12 section-2">
             {alert && (
               <Alert
               alertTitle="Karyawan atas nama Filza Harry telah ditambahkan pada Departemen Produksi - Spandeck/Bondeck"

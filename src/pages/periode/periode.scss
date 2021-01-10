@@ -2,6 +2,7 @@
   box-shadow: 10px 10px 23px -7px rgba(0, 0, 0, 0.25);
   border-radius: 2px;
   max-width: 400px;
+  margin-top: 20px;
   .col-date {
     padding-left: 20px;
     padding-top: 25px;
@@ -17,13 +18,14 @@
   }
 
   .col-order {
-    padding-top: 25px;
-    padding-right: 25px;
-    padding-left: 25px;
+    max-width: 55px;
+    width: 85px;
     background-color:#98e7d1;
     .period-order {
         font-size: 40px;
-        color: black;
+        text-align: center;
+        padding-top: 25px;
+        color: rgb(26, 26, 26);
     }
   }
 }

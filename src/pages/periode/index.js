@@ -1,21 +1,59 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { FormScore } from '..'
-import { ValueCompleted } from '../../component'
-import SelectPeriode from './component'
-import ScoreList from '../scorelist'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+// import { periodeAction } from "../../config/actions/periode";
+import Gap from "../../component/atoms/Gap";
+import "./periode.scss";
+import moment from "moment";
+import { karyawanDetailAction } from "../../config/actions/karyawan";
 
-const Periode = () => {
+const mapStateToProps = (state) => {
+  return {
+    getKaryawanDetail: state.karyawan.getKaryawanDetail,
+    errorKaryawanDetail: state.karyawan.errorKaryawanDetail,
+  };
+};
+
+class SelectPeriode extends Component {
+  componentDidMount() {
+    this.props.dispatch(karyawanDetailAction(this.props.match.params.id));
+  }
+  render() {
+    const periode = this.props.getKaryawanDetail.data;
+    // console.log("data Input periode:", this.props.getPeriodeList.data);
     return (
-        <Router>
-          <Switch>
-            <Route path="/periode/:id/nilai/terkirim" component={ValueCompleted} />
-            <Route path="/periode/:id/nilai" component={FormScore} />
-            <Route path="/periode/:id" component={ScoreList} />
-            <SelectPeriode />
-          </Switch>
-      </Router>
-    )
-}
+      <div className="container-sm">
+        <div className="col-sm-12">
+          <Gap height={20} />
+          <Link to="/karyawan" className="btn btn-info">
+            Kembali
+          </Link>
+          <Gap height={20} />
+          <div>
+          <h5 className="font-weight-bold">Pilih Periode</h5>
 
-export default Periode
+            {periode &&
+              periode.map((getKaryawanDetail) => (
+                <Link to={`/periode/${getKaryawanDetail._id}`}>
+                <div className="periode">
+                  <div className="row">
+                    <div className="col-date">
+                      <p className="period-text-1">Mulai : </p>
+                      <p className="period-text-2 pb-2 text-secondary">{moment(getKaryawanDetail.tglMulai).subtract(10, 'days').format('LL')}</p>
+                      <p className="period-text-1">Selesai : </p>
+                      <p className="period-text-2 pb-2 text-secondary">{moment(getKaryawanDetail.tglSelesai).subtract(10, 'days').format('LL')}</p>
+                    </div>
+                    <div className="col-order ml-auto">
+                      <p className="period-order">{getKaryawanDetail.periode}</p>
+                    </div>
+                  </div>
+                </div>
+                </Link>
+              ))}
+        </div>
+        </div>
+      </div>
+    );
+  }
+}
+export default connect(mapStateToProps)(SelectPeriode);

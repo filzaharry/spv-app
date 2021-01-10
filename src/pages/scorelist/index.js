@@ -2,15 +2,21 @@ import React, { Fragment, useEffect, useState } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faInfo, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { API_URL } from "../../config/utils/constants";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { API_URL, API_URL_SPV } from "../../config/utils/constants";
 import { Gap } from "../../component";
+import { Spinner } from "react-bootstrap";
+import swal from "sweetalert";
+import moment from 'moment'
+// import { DataNotFound } from "../../assets";
 
-const DetailDepartemen = (props) => {
+
+const NilaiSupervisor = (props) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const id = props.match.params.id;
-    Axios.get(`${API_URL}/karyawan/${id}/periode/${id}`)
+    // GET periode by ID
+    Axios.get(`${API_URL}periode/${id}`)
       .then((res) => {
         setData(res.data.data);
       })
@@ -19,10 +25,40 @@ const DetailDepartemen = (props) => {
       });
   }, [props]);
 
-  const nilaiSpv = data.nilaiSpvId;
-  if (nilaiSpv) {
-    console.log([data.nilaiSpvId]);
+  const handleRemove = (nilaiSpv) => {
+    // console.log("yoi",nilaiSpv);
+    swal({
+      title: "Are you sure?",
+      text: "Jika Nilai dihapus, maka seluruh data nilai terkait akan terhapus",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        // console.log(spvId);
+      Axios.delete(`${API_URL_SPV}nilaispv/${nilaiSpv}`)
+        .then((res) => {
+          setData(res.data.data);
+        })
+        .catch((err) => {
+          console.log("err: ", err);
+        });
+        swal("Data Nilai telah di hapus!", {
+          icon: "success",
+        });
+        window.location.reload(false);
+      } else {
+        swal("Periksa kembali sebelum menghapus data");
+      }
+    });
   }
+
+    const id = props.match.params.id
+  const nilaiSpv = data.nilaiSpvId;
+  // if (nilaiSpv) {
+  //   console.log([data.nilaiSpvId]);
+  // }
   return (
     <div>
       {nilaiSpv ? (
@@ -39,36 +75,36 @@ const DetailDepartemen = (props) => {
 
               <Link
                 className="btn btn-info"
-                to={`/periode/${props.match.params.id}/nilai`}
+                to={`${id}/nilaispv`}
               >
                 {" "}
                 Tambah Nilai
               </Link>
 
-              <hr />
-
               <table className="table mt-4 shadow p-3 mb-5 bg-white rounded">
                 <thead>
                   <tr className="text-primary">
-                    <th scope="col">Bulan Ke</th>
+                    <th scope="col">Tanggal</th>
                     <th scope="col">Nilai</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.nilaiSpvId.map((nilaiSpv) => (
-                    <tr>
-                      <td>1</td>
+                    <tr key={nilaiSpv._id}>
+                      <td>{moment(nilaiSpv.updatedAt)
+                          .subtract(10, "days")
+                          .format("L")}</td>
                       <td>{Math.trunc(nilaiSpv.hasilAkhir)}</td>
                       <td>
-                        <Link to="edit">
+                        <Link to={`${id}/nilaispv/${nilaiSpv._id}`}>
                           <button color="info" className="btn btn-primary mr-2">
                             <FontAwesomeIcon icon={faEdit} />
                           </button>
-                          <button color="info" className="btn btn-danger mr-2">
+                        </Link>
+                          <button color="info" className="btn btn-danger mr-2" onClick={()=> handleRemove(nilaiSpv._id)}>
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
-                        </Link>
                       </td>
                     </tr>
                   ))}
@@ -78,12 +114,15 @@ const DetailDepartemen = (props) => {
           </div>
         </Fragment>
       ) : (
-        <div className="text-center">
-          <p>Data Nilai Tidak Ada</p>
+        <div className="text-center mx-auto">
+          {/* <DataNotFound /> */}
+          <Gap height={100} />
+          <Spinner />
+          <p>Loading data...</p>
         </div>
       )}
     </div>
   );
 };
 
-export default DetailDepartemen;
+export default NilaiSupervisor;

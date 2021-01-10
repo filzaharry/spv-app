@@ -6,19 +6,19 @@ const Keterampilan = (props) => {
     <div className="boxed">
       <p>{props.kategori}</p>
       <input type="radio" id="21" name={props.name} value="1" onChange={props.onChange} />
-      <label for="21">1</label>
+      <label htmlFor="21">1</label>
 
       <input type="radio" id="22" name={props.name} value="2" onChange={props.onChange} />
-      <label for="22">2</label>
+      <label htmlFor="22">2</label>
 
       <input type="radio" id="23" name={props.name} value="3" onChange={props.onChange} />
-      <label for="23">3</label>
+      <label htmlFor="23">3</label>
 
       <input type="radio" id="24" name={props.name} value="4" onChange={props.onChange} />
-      <label for="24">4</label>
+      <label htmlFor="24">4</label>
 
       <input type="radio" id="25" name={props.name} value="5" onChange={props.onChange} />
-      <label for="25">5</label>
+      <label htmlFor="25">5</label>
     </div>
   );
 };

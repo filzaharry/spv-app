@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL, API_URL_SPV } from "../../utils/constants";
+import { API_URL } from "../../utils/constants";
 
 export const GET_PERIODE_LIST = "GET_PERIODE_LIST";
 export const GET_PERIODE_DETAIL = "GET_PERIODE_DETAIL";
@@ -8,10 +8,10 @@ export const periodeAction = (id) => {
   return (dispatch) => {
     // Make a request for a user with a given ID
     axios
-      .get(`${API_URL}/karyawan/${id}/periode`)
+      .get(`${API_URL}karyawan/${id}/periode`)
       .then(function (response) {
         // handle success
-        // console.log(response.data.data);
+        console.log(response.data.data);
         dispatch({
           type: GET_PERIODE_LIST,
           payload: {
