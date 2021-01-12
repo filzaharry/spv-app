@@ -23,7 +23,7 @@ const ProfileKaryawan = (props) => {
           {" "}
           <div className="text-center">
             <img
-              src={`http://localhost:4000/${responseAPI.image}`}
+              src={`https://aplus-hrd-api-server.herokuapp.com/${responseAPI.image}`}
               className="img-thumbnail rounded-circle"
               alt="employee"
               width={80}

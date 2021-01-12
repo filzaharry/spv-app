@@ -29,7 +29,7 @@ const EmpComponent = (props) => {
                   <div className="row">
                     <div className="image-profile">
                       <img
-                        src={`http://localhost:4000/${getKaryawanList.image}`}
+                        src={`https://aplus-hrd-api-server.herokuapp.com/${getKaryawanList.image}`}
                         alt={getKaryawanList.name}
                       />
                     </div>

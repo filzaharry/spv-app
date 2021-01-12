@@ -30,7 +30,7 @@ class Departemen extends Component {
               <div className="row">
                 <div className="image-profile">
                   <img
-                    src={`http://localhost:4000/${getDepartemenList.image}`}
+                    src={`https://aplus-hrd-api-server.herokuapp.com/${getDepartemenList.image}`}
                     alt={getDepartemenList.nama_dep}
                   />
                 </div>
