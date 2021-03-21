@@ -1,35 +1,35 @@
-import React, { Component } from "react";
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { connect } from "react-redux";
-import { karyawanAction } from "../../config/actions/karyawan";
-import EmpComponent from "./component";
 import Profile from "../profile";
-import { ScoreList, SelectPeriode } from "..";
+import { Periode, ScoreList } from "..";
 import { FormPenilaian, FormScoreEdit, ValueCompleted, ValueUpdated } from "../../component";
+import EmployeeList from './list';
+import ScoreListDetail from '../scorelist/detail';
 
-class Employee extends Component {
-  componentDidMount() {
-    this.props.dispatch(karyawanAction());
-  }
-  // componentDidUpdate() {
-  //   this.props.dispatch(karyawanAction());
-  // }
-  render() {
-    return (
+const Employee = () => {
+  return (
       <Router>
           <Switch>
-            <Route path="/karyawan/:id/periode/:id/nilaispv/:spvId/terupdate" component={ValueUpdated} />
-            <Route path="/karyawan/:id/periode/:id/nilaispv/:spvId" component={FormScoreEdit} />
-            <Route path="/karyawan/:id/periode/:id/nilai/terkirim" component={ValueCompleted} />
-            <Route path="/karyawan/:id/periode/:id/nilaispv" component={FormPenilaian} />
-            <Route path="/karyawan/:id/periode/:id" component={ScoreList} />
-            <Route path="/karyawan/:id/periode" component={SelectPeriode} />
+            <Route path="/karyawan/:karyawanId/periode/:periodeId/nilaispv/:spvId/terupdate" component={ValueUpdated} />
+            <Route path="/karyawan/:karyawanId/periode/:periodeId/nilaispv/:spvId/edit" component={FormScoreEdit} />
+            <Route path="/karyawan/:karyawanId/periode/:periodeId/nilaispv/terkirim" component={ValueCompleted} />
+
+            <Route path="/karyawan/:karyawanId/periode/:periodeId/nilaispv/:id" component={ScoreListDetail} />
+            <Route path="/karyawan/:karyawanId/periode/:periodeId/nilaispv" component={FormPenilaian} />
+            
+            <Route path="/karyawan/:karyawanId/periode/:periodeId" component={ScoreList} />
+            <Route path="/karyawan/:id/periode" component={Periode} />
+            
             <Route path="/karyawan/:id" component={Profile} />
-            <Route path="/karyawan" component={EmpComponent} />
+            <Route path="/karyawan" component={EmployeeList} />
           </Switch>
       </Router>
-    );
-  }
+  )
 }
 
-export default connect()(Employee);
+export default Employee
+
+
+
+
+

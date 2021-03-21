@@ -15,19 +15,19 @@ const BottomNav = () => {
           <div className="row">
             
               <div className="col-4 text-center" onClick={()=> history.push('/')}>
-                <img src={DashboardIC} className="pb-2 cta-button" alt="home" />
+                <img src={DashboardIC} className="pb-2 cta-button" alt="home" height={60} width={50} />
                 <p className="cta-text text-center pt-2">Home</p>
               </div>
            
             
               <div className="col-4 text-center" onClick={()=> history.push('/karyawan')}>
-                <img src={KaryawanIC} className="pb-2 cta-button" alt="info" />
+                <img src={KaryawanIC} className="pb-2 cta-button" alt="info" height={60} width={50} />
                 <p className="cta-text text-center pt-2">Karyawan</p>
               </div>
            
             
               <div className="col-4 text-center" onClick={()=> history.push('/pengaturan')}>
-                <img src={SettingsIC} className="pb-2 cta-button" alt="pengaturan" />
+                <img src={SettingsIC} className="pb-2 cta-button" alt="pengaturan" height={60} width={50} />
                 <p className="cta-text text-center pt-2">Pengaturan</p>
               </div>
            

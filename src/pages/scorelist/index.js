@@ -1,118 +1,141 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Axios from "axios";
-import { Link } from "react-router-dom";
+import { useHistory, useParams, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { API_URL, API_URL_SPV } from "../../config/utils/constants";
-import { Gap } from "../../component";
+import {
+  faCheck,
+  faList,
+  faPlus,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
+import { API_URL } from "../../config/utils/constants";
+import { Back, Gap } from "../../component";
 import { Spinner } from "react-bootstrap";
-import swal from "sweetalert";
-import moment from 'moment'
+import moment from "moment";
 // import { DataNotFound } from "../../assets";
-
 
 const NilaiSupervisor = (props) => {
   const [data, setData] = useState([]);
+  const history = useHistory();
+
+  const { karyawanId, periodeId } = useParams();
+
   useEffect(() => {
-    const id = props.match.params.id;
+    // const id = props.match.params.id;
     // GET periode by ID
-    Axios.get(`${API_URL}periode/${id}`)
+    Axios.get(`${API_URL}periode/${periodeId}`)
       .then((res) => {
+        // console.log(res);
         setData(res.data.data);
       })
       .catch((err) => {
         console.log("err: ", err);
       });
-  }, [props]);
+  }, [props, periodeId]);
 
-  const handleRemove = (nilaiSpv) => {
-    // console.log("yoi",nilaiSpv);
-    swal({
-      title: "Are you sure?",
-      text: "Jika Nilai dihapus, maka seluruh data nilai terkait akan terhapus",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        // console.log(spvId);
-      Axios.delete(`${API_URL_SPV}nilaispv/${nilaiSpv}`)
-        .then((res) => {
-          setData(res.data.data);
-        })
-        .catch((err) => {
-          console.log("err: ", err);
-        });
-        swal("Data Nilai telah di hapus!", {
-          icon: "success",
-        });
-        window.location.reload(false);
-      } else {
-        swal("Periksa kembali sebelum menghapus data");
-      }
-    });
-  }
 
-    const id = props.match.params.id
   const nilaiSpv = data.nilaiSpvId;
-  // if (nilaiSpv) {
-  //   console.log([data.nilaiSpvId]);
-  // }
+  const nilaiHrd = data.nilaiHrdId;
+
+  // console.log('nilaispv', nilaiSpv);
+  // console.log('nilaihrd', nilaiHrd);
+
+  const totalhrd =
+  nilaiHrd && nilaiHrd.map((nHrd) => nHrd.hasilAkhir).reduce((a, b) => a + b, 0);
+
+  const totalspv =
+  nilaiSpv && nilaiSpv.map((nSpv) => Math.trunc(nSpv.hasilAkhir))
+      .reduce((a, b) => a + b, 0);
+  // console.log(totalspv);
+
+  const total = (totalhrd + totalspv) / 2;
+  // console.log("total",total);
   return (
-    <div>
+    <Fragment>
+      <Gap height={20} />
       {nilaiSpv ? (
-        <Fragment>
-          {" "}
+        <div className="container">
           <div className="col">
+            <Back
+              title="Daftar Nilai"
+              onClick={() => history.push(`/karyawan/${karyawanId}/periode`)}
+            />
             <Gap height={30} />
-            <div className="container">
-              <h3>Daftar Nilai</h3>
-              <h6>
-                Supervisor bisa menambah Nilai maksimal 12 kali dalam 1 periode
-              </h6>
-              <Gap height={30} />
 
-              <Link
-                className="btn btn-info"
-                to={`${id}/nilaispv`}
-              >
-                {" "}
-                Tambah Nilai
-              </Link>
+            <p
+              onClick={() =>
+                history.push(
+                  `/karyawan/${karyawanId}/periode/${data._id}/nilaispv`
+                )
+              }
+              className="btn btn-primary"
+            >
+              <FontAwesomeIcon icon={faPlus} /> Nilai Baru
+            </p>
+            <p className="btn btn-success float-right">
+              Total Nilai :{" "}
+              {data.nilaiSpvId
+                .map((nilaiSpv) =>Math.trunc(nilaiSpv.hasilAkhir))
+                .reduce((a, b) => a + b, 0)}
+            </p>
 
-              <table className="table mt-4 shadow p-3 mb-5 bg-white rounded">
-                <thead>
-                  <tr className="text-primary">
-                    <th scope="col">Tanggal</th>
-                    <th scope="col">Nilai</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.nilaiSpvId.map((nilaiSpv) => (
-                    <tr key={nilaiSpv._id}>
-                      <td>{moment(nilaiSpv.updatedAt)
-                          .subtract(10, "days")
-                          .format("L")}</td>
-                      <td>{Math.trunc(nilaiSpv.hasilAkhir)}</td>
-                      <td>
-                        <Link to={`${id}/nilaispv/${nilaiSpv._id}`}>
-                          <button color="info" className="btn btn-primary mr-2">
+            <p>
+              Penilaian dilakukan setiap{" "}
+              <span className="text-info">1 Bulan Sekali</span>
+            </p>
+
+            <table className="table table-bordered table-responsive">
+              <thead>
+                <tr className="text-primary">
+                  <th scope="col">Tgl Input</th>
+                  <th scope="col">Nilai</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.nilaiSpvId.map((nilaiSpv) => (
+                  <tr key={nilaiSpv._id}>
+                    <td>
+                      {moment(nilaiSpv.updatedAt)
+                        .subtract(10, "days")
+                        .format("L")}
+                    </td>
+                    <td>{Math.trunc(nilaiSpv.hasilAkhir)}</td>
+                    <td>{ total <= 3 ? (
+                <p className="text-danger">
+                  <FontAwesomeIcon icon={faTimes} /> Selesai
+                </p>
+              ) : (
+                <p className="text-success">
+                  <FontAwesomeIcon icon={faCheck} /> Diperpanjang
+                </p>
+              )}
+</td>
+                    <td>
+                      <p
+                        onClick={() =>
+                          history.push(
+                            `/karyawan/${karyawanId}/periode/${data._id}/nilaispv/${nilaiSpv._id}`
+                          )
+                        }
+                        className="rounded-circle btn btn-info mr-2"
+                      >
+                        <FontAwesomeIcon icon={faList} />
+                      </p>
+                      {/* <p className="rounded-circle btn btn-warning mr-2">
                             <FontAwesomeIcon icon={faEdit} />
-                          </button>
-                        </Link>
-                          <button color="info" className="btn btn-danger mr-2" onClick={()=> handleRemove(nilaiSpv._id)}>
+                          </p>
+                          <p className="rounded-circle btn btn-danger mr-2" onClick={()=> handleRemove(nilaiSpv._id)}>
                             <FontAwesomeIcon icon={faTrash} />
-                          </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                          </p> */}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </Fragment>
+        </div>
       ) : (
         <div className="text-center mx-auto">
           {/* <DataNotFound /> */}
@@ -121,8 +144,8 @@ const NilaiSupervisor = (props) => {
           <p>Loading data...</p>
         </div>
       )}
-    </div>
+    </Fragment>
   );
 };
 
-export default NilaiSupervisor;
+export default withRouter(NilaiSupervisor);

@@ -1,5 +1,8 @@
 .container-sm {
     .img-profile {
-        margin: auto !important;
+        margin: auto ;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
     }
 }

@@ -1,12 +1,8 @@
 // import images
 import LoginBg from "./images/login-hero-img.svg";
-import CardLP1 from "./images/card-1.svg";
-import CardLP2 from "./images/card-2.svg";
-import CardLP3 from "./images/card-3.svg";
 import HeaderImg from "./images/header.svg";
 import FooterBg from "./images/bg-footer.svg";
 import HeroImg from "./images/hero-img.svg";
-import CardImgHello from "./images/card-hello.svg";
 import LoginBgMobile from "./images/login-bg.svg";
 import ForgetPwd from "./images/forgot-password.svg";
 import DataNotFound from "./images/data-not-found.svg";
@@ -38,16 +34,12 @@ import LinkedInIC from "./icon/linkedin-icon-footer.svg";
 // export
 export {
   LoginBg,
-  CardLP1,
-  CardLP2,
-  CardLP3,
   HeaderImg,
   FooterBg,
   HelpSupportIC,
   RefreshIC,
   ForgetPwd,
   HeroImg,
-  CardImgHello,
   DataNotFound,
   LoginBgMobile,
   Logo,

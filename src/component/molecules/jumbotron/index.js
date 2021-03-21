@@ -10,7 +10,7 @@ const Jumbotron = (props) => {
             <h5 className="jumbo-text">{props.jumbotronTitle}</h5>
         </div>
         <div className="col">
-            <img src={LoginBg} alt="header-img" />
+            <img src={LoginBg} alt="header-img" height={100} width={140} />
         </div>
         </div>
     </div>

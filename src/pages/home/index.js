@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import { EmployeeIC, ChecklistIC, HelpIC, DepartemendIC } from "../../assets";
 import { Alert } from "../../component/atoms";
 import { Card, Jumbotron } from "../../component/molecules";
 
 const Home = () => {
-  const[alert, setAlert] = useState('')
+  // const[alert, setAlert] = useState('')
   const history = useHistory();
 
   const updateKaryawan = () => {

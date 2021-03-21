@@ -9,13 +9,11 @@ import Register from "./register";
 import ResetPassword from "./reset";
 import Settings from "./settings";
 import ScoreList from "./scorelist";
-import FormScore from "./formscore";
 import ValueHistory from "./history";
 import About from './about'
 import ForgetPassword from './forget'
 import Help from './help'
 import Periode from './periode'
-import SelectPeriode from './selectperiode'
 
 export {
   Employee,
@@ -28,11 +26,9 @@ export {
   ResetPassword,
   Settings,
   ScoreList,
-  FormScore,
   ValueHistory,
   About,
   ForgetPassword,
   Help,
   Periode,
-  SelectPeriode
 };

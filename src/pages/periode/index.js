@@ -1,59 +1,67 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-// import { periodeAction } from "../../config/actions/periode";
+import React, { useEffect } from "react";
 import Gap from "../../component/atoms/Gap";
 import "./periode.scss";
 import moment from "moment";
-import { karyawanDetailAction } from "../../config/actions/karyawan";
+import { useHistory, withRouter } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setDataPeriode } from "../../config/redux/action/periodeAction";
+import { Spinner } from "react-bootstrap";
+import { Back } from "../../component";
 
-const mapStateToProps = (state) => {
-  return {
-    getKaryawanDetail: state.karyawan.getKaryawanDetail,
-    errorKaryawanDetail: state.karyawan.errorKaryawanDetail,
-  };
-};
+const Periode = (props) => {
+  const history = useHistory();
+  const { dataPeriode } = useSelector((state) => state.periodeReducer);
+  const dispatch = useDispatch();
 
-class SelectPeriode extends Component {
-  componentDidMount() {
-    this.props.dispatch(karyawanDetailAction(this.props.match.params.id));
-  }
-  render() {
-    const periode = this.props.getKaryawanDetail.data;
-    // console.log("data Input periode:", this.props.getPeriodeList.data);
+  useEffect(() => {
+    const id = props.match.params.id;
+    dispatch(setDataPeriode(id));
+  }, [props, dispatch]);
+
+  const periode = dataPeriode.periodeId;
+  if (periode) {
     return (
       <div className="container-sm">
         <div className="col-sm-12">
           <Gap height={20} />
-          <Link to="/karyawan" className="btn btn-info">
-            Kembali
-          </Link>
+          <Back onClick={()=> history.push(`/karyawan/${dataPeriode._id}`)} title="Periode" />
           <Gap height={20} />
           <div>
-          <h5 className="font-weight-bold">Pilih Periode</h5>
-
-            {periode &&
-              periode.map((getKaryawanDetail) => (
-                <Link to={`/periode/${getKaryawanDetail._id}`}>
-                <div className="periode">
-                  <div className="row">
-                    <div className="col-date">
-                      <p className="period-text-1">Mulai : </p>
-                      <p className="period-text-2 pb-2 text-secondary">{moment(getKaryawanDetail.tglMulai).subtract(10, 'days').format('LL')}</p>
-                      <p className="period-text-1">Selesai : </p>
-                      <p className="period-text-2 pb-2 text-secondary">{moment(getKaryawanDetail.tglSelesai).subtract(10, 'days').format('LL')}</p>
-                    </div>
-                    <div className="col-order ml-auto">
-                      <p className="period-order">{getKaryawanDetail.periode}</p>
-                    </div>
+            {periode.map((infoPeriode) => (
+              <div
+                className="periode"
+                onClick={() => history.push(`/karyawan/${dataPeriode._id}/periode/${infoPeriode._id}`)}
+              >
+                <div className="row">
+                  <div className="col-date">
+                    <p className="period-text-1">Mulai : </p>
+                    <p className="period-text-2 pb-2 text-secondary">
+                      {moment(infoPeriode.tglMulai)
+                        .subtract(10, "days")
+                        .format("LL")}
+                    </p>
+                    <p className="period-text-1">Selesai : </p>
+                    <p className="period-text-2 pb-2 text-secondary">
+                      {moment(infoPeriode.tglSelesai)
+                        .subtract(10, "days")
+                        .format("LL")}
+                    </p>
+                  </div>
+                  <div className="col-order ml-auto">
+                    <p className="period-order">{infoPeriode.periodeKe}</p>
                   </div>
                 </div>
-                </Link>
-              ))}
-        </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
   }
-}
-export default connect(mapStateToProps)(SelectPeriode);
+  return (
+    <div className="text-center mt-4">
+      <Spinner type="grow" variant="warning" />
+    </div>
+  );
+};
+export default withRouter(Periode);
