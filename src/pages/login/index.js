@@ -6,6 +6,7 @@ import addNotification from "react-push-notification";
 import swal from "sweetalert";
 import Axios from "axios";
 import "./login.scss";
+import { API } from "../../config/utils/constants";
 
 const Login = () => {
   const history = useHistory();
@@ -33,7 +34,7 @@ const Login = () => {
       password: password,
     };
     Axios
-      .post("http://localhost:4000/v1/login", data)
+      .post(`${API}v1/login`, data)
       .then((result) => {
         if (result) {
           localStorage.setItem("token", result.data.token);

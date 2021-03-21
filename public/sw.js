@@ -25,7 +25,7 @@ self.addEventListener('install', (event) => {
 // Listen for requests
 self.addEventListener('fetch', (event) => {
     if(!navigator.onLine){
-        if(event.request.url === 'http://localhost:3000/static/js/main.chunk.js'){
+        if(event.request.url === 'https://aplus-spv.netlify.app/static/js/main.chunk.js'){
             event.waitUntil(
                 this.registration.showNotification("Mode Offline", {
                     body: "Anda memasuki mode tanpa Internet",

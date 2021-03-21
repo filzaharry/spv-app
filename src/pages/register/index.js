@@ -4,6 +4,7 @@ import { Button, Gap, Wave } from "../../component";
 import Axios from 'axios'
 import swal from "sweetalert";
 import addNotification from "react-push-notification";
+import { API } from "../../config/utils/constants";
 
 const Register = () => {
   const history = useHistory();
@@ -36,7 +37,7 @@ const Register = () => {
     };
     // console.log(data);
     Axios
-      .post("http://localhost:4000/v1/register", data)
+      .post(`${API}/v1/register`, data)
       .then((result) => {
         if (result) {
           if (result.data) {
