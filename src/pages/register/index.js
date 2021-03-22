@@ -61,7 +61,7 @@ const Register = () => {
     };
     // console.log(data);
     Axios
-      .post(`${API}v1/register`, data)
+      .post(`${LOCAL}v1/register`, data)
       .then((result) => {
         history.push("/login");
         if (result) {

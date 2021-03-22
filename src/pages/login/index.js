@@ -34,7 +34,7 @@ const Login = () => {
       password: password,
     };
     Axios
-      .post(`${API}v1/login`, data)
+      .post(`${LOCAL}v1/login`, data)
       .then((result) => {
         if (result) {
           localStorage.setItem("user",  JSON.stringify(result.data.dataUser));

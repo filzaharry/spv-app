@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { API } from "../../utils/constants";
+import { API, LOCAL } from "../../utils/constants";
 
 export const setDataUser = () => (dispatch) => {
     const config = {
@@ -9,7 +9,7 @@ export const setDataUser = () => (dispatch) => {
         }
       }
       console.log(config);
-      Axios.get(`${API}v1/user`, config)
+      Axios.get(`${LOCAL}v1/user`, config)
         .then((res) => {
           const responseAPI = res.data.data;
           dispatch({ type: "UPDATE_DATA_USER", payload: responseAPI });
