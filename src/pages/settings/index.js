@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Gap } from "../../component/atoms";
 import { Jumbotron } from "../../component/molecules";
@@ -6,10 +7,27 @@ import About from "../about";
 import ResetPassword from "../reset";
 
 
-const onClickLogout = () => {
-  window.localStorage.clear();
-  window.location.reload(false);
-};
+const logOut = () => {
+  confirmAlert({
+    title: "Confirm to Delete",
+    message:
+      "Apakah Anda Yakin ingin Keluar ?",
+    buttons: [
+      {
+        label: "Yes",
+        onClick: () => {
+          // console.log(_id);
+          localStorage.clear()
+          window.location.reload();
+        },
+      },
+      {
+        label: "No",
+        onClick: () => alert("User Tidak Setuju"),
+      },
+    ],
+  });
+}
 
 const compBtn = () => {
   return (
@@ -38,7 +56,7 @@ const compBtn = () => {
           to="/login"
           className="btn btn-info"
           style={{ width: "180px" }}
-          onClick={onClickLogout}
+          onClick={logOut}
         >
           Logout
         </Link>

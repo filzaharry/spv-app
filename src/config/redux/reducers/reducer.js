@@ -10,6 +10,8 @@ import detailKaryawanReducer from "./detailKaryawanReducer"
 
 import createNilaiSPVReducer from "./createNilaiSPVReducer"
 
+import userReducer from "./userReducer"
+
 
 
 const reducer = combineReducers({
@@ -24,7 +26,9 @@ const reducer = combineReducers({
 
   periodeReducer,
 
-  createNilaiSPVReducer
+  createNilaiSPVReducer,
+
+  userReducer
 
 });
 

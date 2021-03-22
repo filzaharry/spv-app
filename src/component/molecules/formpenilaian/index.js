@@ -6,6 +6,7 @@ import { postToAPINilaiSPV, setCreateNilaiSPV } from "../../../config/redux/acti
 import Jumbotron from "../jumbotron";
 import KategoriCheckBox from "./kategori";
 import Saran from "./saran";
+import swal from "sweetalert";
 
 
 
@@ -33,8 +34,25 @@ const FormPenilaian = (props) => {
   const { karyawanId, periodeId } = useParams();
 
   const onSubmit = () => {
-    postToAPINilaiSPV(form, periodeId);
-    history.push(`/karyawan/${karyawanId}/periode/${periodeId}/nilaispv/terkirim`)
+    swal({
+      title: "Apakah Anda Yakin ?",
+      text: "Dengan ini Anda akan mengirim nilai Karyawan Anda ke HRD",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        postToAPINilaiSPV(form, periodeId);
+        history.push(`/karyawan/${karyawanId}/periode/${periodeId}/nilaispv/terkirim`)
+        swal("Berhasil Terkirim!", {
+          icon: "success",
+        });
+      } else {
+        swal("Terimakasih telah melakukan penilaian");
+      }
+    });
+    
   }
 
   const valueRekomendasi = () => {
@@ -81,30 +99,19 @@ const FormPenilaian = (props) => {
           type="checkbox"
           id="rekomendasi"
           onClick={valueRekomendasi}
-          value={!valueRekomendasi ? 0 : 3 }
+          value={!valueRekomendasi ? 0 : 0.5 }
           onChange={(e) => dispatch(setCreateNilaiSPV("rekomendasi", e.target.value))}
         />
         <label className="form-check-label font-s" htmlFor="confirmAccount">
           <small>Rekomendasikan Karyawan untuk Perpanjang Masa Kontrak</small>
         </label>
+        <Gap height={20} />
+        <hr/>
+        {/* <div className="row"> */}
+          <button className="btn btn-secondary" onClick={()=> history.push(`/karyawan/${karyawanId}/periode/${periodeId}/nilaispv`)}>Kembali</button>
+          <button className="btn btn-primary" style={{marginLeft: "70px"}}  onClick={onSubmit}>Kirim Nilai</button>
+        {/* </div> */}
       </div>
-      <hr className="bg-dark" />
-      <div className="form-check ml-3">
-        <input className="form-check-input" type="checkbox" id="confirmValue" />
-        <label className="form-check-label font-s" htmlFor="confirmValue">
-          <small>
-            Dengan ini saya membuat penilaian dengan sebenar-benarnya.
-            <span className="text-primary">
-              Periksa kembali penilaian Anda sebelum menekan tombol Kirim
-            </span>
-          </small>
-        </label>
-      </div>
-      <div className="container row pt-4 mx-auto">
-        <p className="btn btn-secondary" onClick={()=> history.push(`/karyawan/${karyawanId}/periode/${periodeId}/nilaispv`)}>Kembali</p>
-        <p className="btn btn-primary float-right" onClick={onSubmit}>Kirim Nilai</p>
-      </div>
-      <Gap height={50} />
     </div>
     </Fragment>
   );

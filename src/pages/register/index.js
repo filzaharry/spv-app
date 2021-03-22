@@ -1,18 +1,39 @@
 import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Gap, Wave } from "../../component";
+import { Button, Footer, Gap, Input, Wave } from "../../component";
 import Axios from 'axios'
 import swal from "sweetalert";
 import addNotification from "react-push-notification";
-import { API } from "../../config/utils/constants";
+import { API, LOCAL } from "../../config/utils/constants";
+import Departemen from "./selectDep";
+import Jabatan from "./selectJab";
 
 const Register = () => {
   const history = useHistory();
+  const[namaLengkap, setNamaLengkap] = useState('');
+  const[departemen, setDepartemen] = useState('');
+  const[jabatan, setJabatan] = useState('');
   const[username, setUsername] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
+  const [alert, setAlert] = useState("");
   const[error, setError] = useState('');
 
+  const onChangeNamaLengkap =(e)=> {
+    const value = e.target.value;
+    setNamaLengkap(value);
+    setError('')
+  }
+  const onChangeJabatan = (e) => {
+    const value = e.target.value;
+    setJabatan(value);
+    setError("");
+  };
+  const onChangeDepartemen = (e) => {
+    const value = e.target.value;
+    setDepartemen(value);
+    setError("");
+  };
   const onChangeUsername =(e)=> {
     const value = e.target.value;
     setUsername(value);
@@ -32,34 +53,36 @@ const Register = () => {
   const RegisterClick = () => {
     const data = {
       username: username,
+      namaLengkap: namaLengkap,
+      departemen: departemen,
+      jabatan: jabatan,
       email: email,
       password: password,
     };
     // console.log(data);
     Axios
-      .post(`${API}/v1/register`, data)
+      .post(`${API}v1/register`, data)
       .then((result) => {
+        history.push("/login");
         if (result) {
           if (result.data) {
+            setNamaLengkap("");
+            setDepartemen("");
+            setJabatan("");
             setUsername("");
             setEmail("");
             setPassword("");
-            // setAlert(result.data.message);
-            // setTimeout(() => {
-            //   setAlert("");
-            // }, 3000);
             swal(
               "Berhasil !",
               result.data.message,
               "success"
             );
             addNotification({
-              title: "Registrasi Berhasil !!!",
+              title: `Selamat Datang ${result.data.namaLengkap}`,
               message: result.data.message,
-              icon: "https://cdn.worldvectorlogo.com/logos/pwa-logo.svg",
               theme: "darkblue",
               native: true,
-              duration: 30000, // when using native, your OS will handle theming.
+              duration: 30000,
             });
           }
         }
@@ -70,21 +93,68 @@ const Register = () => {
   };
 
 
-
   return (
     <section>
       <Wave />
       <div className="container">
         <div className="col-sm-12">
-          {error && (
-            <div className="alert alert-danger">
+          {/* { error && error ? (
+           <div className="alert alert-danger">
+           <p>{error}</p>
+          </div> 
+           ) : (
+            <div className="alert alert-success">
+            <p>{success}</p>
+           </div> 
+           )} */}
+
+        {error && (
+          <div className="alert alert-danger">
             <p>{error}</p>
           </div>
-
-          )}
+        )}
           <h3>Daftar User Baru</h3>
           <Gap height={20} />
           <div className="form-group">
+
+          <label htmlFor="namaLengkap">Nama Supervisor</label>
+            <input
+              type="text"
+              className="form-control"
+              id="namaLengkap"
+              placeholder="Nama Lengkap Supervisor"
+              onChange={onChangeNamaLengkap}
+            />
+            <Gap height={10} />
+
+              
+            <p className="text-danger">*Departemen dan Jabatan wajib diisi</p>
+            <div class="form-row">
+              <div class="form-group col">
+              <label for="jabatan">Jabatan</label>
+                <select
+                  id="jabatan"  
+                  className="form-control"
+                  value={jabatan}
+                  onChange={onChangeJabatan}
+                >
+                  <option selected>Choose...</option>
+                  <Jabatan />
+                </select>
+              </div>
+              <div class="form-group col">
+              <label for="departemen">Departemen</label>
+                <select
+                  id="departemen"
+                  className="form-control"
+                  value={departemen}
+                  onChange={onChangeDepartemen}
+                >
+                  <option selected>Choose...</option>
+                  <Departemen />
+                </select>
+              </div>
+            </div>
 
             <label htmlFor="username">Username</label>
             <input
@@ -119,7 +189,6 @@ const Register = () => {
 
             <Button
               onClick={RegisterClick}
-              className="btn btn-primary btn-block"
               title="Daftar Baru"
             />
             <Gap height={10} />
@@ -129,6 +198,7 @@ const Register = () => {
               className="btn btn-secondary btn-block"
               title="Kembali ke Login"
             />
+            <Footer />
           </div>
         </div>
       </div>

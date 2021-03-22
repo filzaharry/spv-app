@@ -5,9 +5,9 @@ import Home from "../home";
 import Settings from "../settings";
 import BottomNav from "../../component/molecules/bottomnav";
 import Departemen from "../departemen";
-import ValueHistory from "../history";
-import { Gap } from "../../component";
+import { Footer, Gap } from "../../component";
 import Help from "../help";
+import UserProfile from "../userProfile";
 
 const MainApp = () => {
   const token = localStorage.getItem('token')
@@ -20,11 +20,12 @@ const MainApp = () => {
         <Switch>
           <Route path="/karyawan" component={Employee} />
           <Route path="/departemen" component={Departemen} />
-          <Route path="/riwayat-nilai" component={ValueHistory} />
+          <Route path="/user-profile" component={UserProfile} />
           <Route path="/pengaturan" component={Settings} />
           <Route path="/bantuan" component={Help} />
           <Route path="/" component={Home} />
         </Switch>
+        <Footer />
       <Gap height={100} />
     </Router>
   );

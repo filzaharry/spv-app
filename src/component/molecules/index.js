@@ -6,6 +6,7 @@ import ValueCompleted from "./valuecompleted";
 import ValueUpdated from "./valueupdated";
 import FormPenilaian from "./formpenilaian";
 import FormScoreEdit from "./formpenilaian/edit";
+import Footer from './footer'
 
 export {
   Sidebar,
@@ -15,5 +16,6 @@ export {
   ValueCompleted,
   FormPenilaian,
   FormScoreEdit,
-  ValueUpdated
+  ValueUpdated,
+  Footer
 };

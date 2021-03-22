@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { Button, Gap, Wave } from "../../component";
+import { Button, Footer, Gap, Wave } from "../../component";
 import { Logo } from "../../assets";
 import addNotification from "react-push-notification";
 import swal from "sweetalert";
 import Axios from "axios";
 import "./login.scss";
-import { API } from "../../config/utils/constants";
+import { API, LOCAL } from "../../config/utils/constants";
 
 const Login = () => {
   const history = useHistory();
@@ -37,6 +37,7 @@ const Login = () => {
       .post(`${API}v1/login`, data)
       .then((result) => {
         if (result) {
+          localStorage.setItem("user",  JSON.stringify(result.data.dataUser));
           localStorage.setItem("token", result.data.token);
           setRedirect(true);
           swal("Selamat Datang !", result.data.message, "success");
@@ -113,6 +114,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    <Footer />
     </Fragment>
   );
 };

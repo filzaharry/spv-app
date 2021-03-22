@@ -25,6 +25,7 @@ import Logo from "./icon/logo.svg";
 import ThumbsIC from "./icon/thumbs-up.svg";
 import ResetIC from "./icon/reset.svg";
 import HelpSupportIC from "./icon/help-support.svg";
+import User from "./icon/user.svg"
 
 // icon socmed
 import TwitterIC from "./icon/twitter-icon-footer.svg";
@@ -34,6 +35,7 @@ import LinkedInIC from "./icon/linkedin-icon-footer.svg";
 // export
 export {
   LoginBg,
+  User,
   HeaderImg,
   FooterBg,
   HelpSupportIC,

@@ -9,7 +9,7 @@ import Register from "./register";
 import ResetPassword from "./reset";
 import Settings from "./settings";
 import ScoreList from "./scorelist";
-import ValueHistory from "./history";
+import UserProfile from "./userProfile";
 import About from './about'
 import ForgetPassword from './forget'
 import Help from './help'
@@ -26,7 +26,7 @@ export {
   ResetPassword,
   Settings,
   ScoreList,
-  ValueHistory,
+  UserProfile,
   About,
   ForgetPassword,
   Help,

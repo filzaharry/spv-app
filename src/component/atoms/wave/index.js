@@ -3,7 +3,7 @@ import { LoginBgMobile } from '../../../assets'
 
 const Wave = () => {
     return (
-        <img src={LoginBgMobile} alt="logo" style={{ maxWidth: "1980px" }} />
+        <img src={LoginBgMobile} alt="logo" style={{ maxWidth: "1980px", marginTop: "-20px" }} />
     )
 }
 

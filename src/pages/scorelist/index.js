@@ -33,23 +33,15 @@ const NilaiSupervisor = (props) => {
       });
   }, [props, periodeId]);
 
-
+  // const 
   const nilaiSpv = data.nilaiSpvId;
-  const nilaiHrd = data.nilaiHrdId;
+  const jumlahNilai = 12
+  const totalspv = nilaiSpv && nilaiSpv.map((nilaiSpv) => Math.trunc(nilaiSpv.hasilAkhir/jumlahNilai*2))
+      .reduce((a, b) => a + b, 0)
 
-  // console.log('nilaispv', nilaiSpv);
-  // console.log('nilaihrd', nilaiHrd);
+  console.log('nilaispv', totalspv);
+  console.log('jmlNial', jumlahNilai);
 
-  const totalhrd =
-  nilaiHrd && nilaiHrd.map((nHrd) => nHrd.hasilAkhir).reduce((a, b) => a + b, 0);
-
-  const totalspv =
-  nilaiSpv && nilaiSpv.map((nSpv) => Math.trunc(nSpv.hasilAkhir))
-      .reduce((a, b) => a + b, 0);
-  // console.log(totalspv);
-
-  const total = (totalhrd + totalspv) / 2;
-  // console.log("total",total);
   return (
     <Fragment>
       <Gap height={20} />
@@ -62,21 +54,11 @@ const NilaiSupervisor = (props) => {
             />
             <Gap height={30} />
 
-            <p
-              onClick={() =>
-                history.push(
-                  `/karyawan/${karyawanId}/periode/${data._id}/nilaispv`
-                )
-              }
-              className="btn btn-primary"
-            >
+            <p onClick={() => history.push(`/karyawan/${karyawanId}/periode/${data._id}/nilaispv`)} className="btn btn-primary">
               <FontAwesomeIcon icon={faPlus} /> Nilai Baru
             </p>
             <p className="btn btn-success float-right">
-              Total Nilai :{" "}
-              {data.nilaiSpvId
-                .map((nilaiSpv) =>Math.trunc(nilaiSpv.hasilAkhir))
-                .reduce((a, b) => a + b, 0)}
+              Total Nilai :{" "}{totalspv}
             </p>
 
             <p>
@@ -88,30 +70,17 @@ const NilaiSupervisor = (props) => {
               <thead>
                 <tr className="text-primary">
                   <th scope="col">Tgl Input</th>
+                  <th>Bulan</th>
                   <th scope="col">Nilai</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">Detail</th>
                 </tr>
               </thead>
               <tbody>
                 {data.nilaiSpvId.map((nilaiSpv) => (
                   <tr key={nilaiSpv._id}>
-                    <td>
-                      {moment(nilaiSpv.updatedAt)
-                        .subtract(10, "days")
-                        .format("L")}
-                    </td>
-                    <td>{Math.trunc(nilaiSpv.hasilAkhir)}</td>
-                    <td>{ total <= 3 ? (
-                <p className="text-danger">
-                  <FontAwesomeIcon icon={faTimes} /> Selesai
-                </p>
-              ) : (
-                <p className="text-success">
-                  <FontAwesomeIcon icon={faCheck} /> Diperpanjang
-                </p>
-              )}
-</td>
+                    <td>{moment(nilaiSpv.updatedAt).subtract(10, "days").format("L")}</td>
+                    <td>{moment(nilaiSpv.updatedAt).format("MM")}</td>
+                    <td>{Math.trunc(nilaiSpv.hasilAkhir*1.95)}</td>
                     <td>
                       <p
                         onClick={() =>
@@ -123,12 +92,6 @@ const NilaiSupervisor = (props) => {
                       >
                         <FontAwesomeIcon icon={faList} />
                       </p>
-                      {/* <p className="rounded-circle btn btn-warning mr-2">
-                            <FontAwesomeIcon icon={faEdit} />
-                          </p>
-                          <p className="rounded-circle btn btn-danger mr-2" onClick={()=> handleRemove(nilaiSpv._id)}>
-                            <FontAwesomeIcon icon={faTrash} />
-                          </p> */}
                     </td>
                   </tr>
                 ))}

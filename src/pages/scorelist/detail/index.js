@@ -154,7 +154,7 @@ const ScoreListDetail = (props) => {
 
         <p>Apakah Karyawan ini Direkomendasikan ?</p>
 
-        {( data.rekomendasi === 3   
+        {( data.rekomendasi === 0.5   
                   ? <p  className="text-info">Ya</p>     
                   :  <p  className="text-danger">Tidak</p>
         )}

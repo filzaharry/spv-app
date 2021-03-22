@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCreateNilaiSPV, updateToAPINilaiSPV } from "../../../../config/redux/action/createNilaiSPV";
 import Axios from "axios";
 import { API_URL_SPV } from "../../../../config/utils/constants";
+import swal from "sweetalert";
 
 // WOI INI HALAMAN EDIT GOBNLOK
 
@@ -65,8 +66,24 @@ const FormScoreEdit = (props) => {
 
 
   const onSubmit = () => {
-    updateToAPINilaiSPV(form, periodeId, spvId);
-    history.push(`/karyawan/${karyawanId}/periode/${periodeId}/nilaispv/${spvId}/terupdate`)
+    swal({
+      title: "Apakah Anda Yakin ?",
+      text: "Dengan ini Anda akan mengirim nilai Karyawan Anda ke HRD",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        updateToAPINilaiSPV(form, periodeId, spvId);
+        history.push(`/karyawan/${karyawanId}/periode/${periodeId}/nilaispv/${spvId}/terupdate`)
+        swal("Berhasil Terkirim!", {
+          icon: "success",
+        });
+      } else {
+        swal("Terimakasih telah melakukan penilaian");
+      }
+    });
     
   }
   const valueRekomendasi = () => {
@@ -112,30 +129,20 @@ const FormScoreEdit = (props) => {
           type="checkbox"
           id="rekomendasi"
           onClick={valueRekomendasi}
-          value={!valueRekomendasi ? 0 : 3 }
+          value={!valueRekomendasi ? 0 : 0.5 }
           onChange={(e) => dispatch(setCreateNilaiSPV("rekomendasi", e.target.value))}
         />
         <label className="form-check-label font-s" htmlFor="confirmAccount">
           <small>Rekomendasikan Karyawan untuk Perpanjang Masa Kontrak</small>
         </label>
       </div>
-      <hr className="bg-dark" />
-      <div className="form-check ml-3">
-        <input className="form-check-input" type="checkbox" id="confirmValue" />
-        <label className="form-check-label font-s" htmlFor="confirmValue">
-          <small>
-            Dengan ini saya membuat penilaian dengan sebenar-benarnya.
-            <span className="text-primary">
-              Periksa kembali penilaian Anda sebelum menekan tombol Kirim
-            </span>
-          </small>
-        </label>
-      </div>
+      <Gap height={20} />
+      <hr />
       <div className="container row pt-4 mx-auto">
         <p className="btn btn-secondary" onClick={()=> history.push(`/karyawan/${karyawanId}/periode/${periodeId}/nilaispv`)}>Kembali</p>
-        <p className="btn btn-primary float-right" onClick={onSubmit}>Kirim Nilai</p>
+        <p className="btn btn-primary float-right" style={{marginLeft: "70px"}} onClick={onSubmit}>Kirim Nilai</p>
       </div>
-      <Gap height={50} />
+      
     </div>
     </Fragment>
   );
