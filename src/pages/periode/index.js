@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Gap from "../../component/atoms/Gap";
 import "./periode.scss";
 import moment from "moment";
@@ -12,11 +12,12 @@ const Periode = (props) => {
   const history = useHistory();
   const { dataPeriode } = useSelector((state) => state.periodeReducer);
   const dispatch = useDispatch();
+  const [mode, setMode] = useState('online');
 
   useEffect(() => {
     const id = props.match.params.id;
     dispatch(setDataPeriode(id));
-  }, [props, dispatch]);
+  }, [props, dispatch, setMode]);
 
   const periode = dataPeriode.periodeId;
   if (periode) {
@@ -26,6 +27,11 @@ const Periode = (props) => {
           <Gap height={20} />
           <Back onClick={()=> history.push(`/karyawan/${dataPeriode._id}`)} title="Periode" />
           <Gap height={20} />
+          {
+            mode==='offline'?
+            <p className="alert-warning">Anda berada dalam mode offline</p>
+            :null
+          }
           <div>
             {periode.map((infoPeriode) => (
               <div

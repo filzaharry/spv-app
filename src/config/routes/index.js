@@ -8,10 +8,10 @@ const Routes = () => {
     <Router>
       <Notifications />
         <Switch>
-          <Route path="/login" component={Login} />
+          {/* <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/reset-password/:token" component={ResetPassword} />
-          <Route path="/lupa-password" component={ForgetPassword} />
+          <Route path="/lupa-password" component={ForgetPassword} /> */}
           <Route path="/" component={MainApp} />
         </Switch>
     </Router>

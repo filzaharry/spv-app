@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Back, Button, Gap } from "../../component";
-import { confirmAlert } from "react-confirm-alert";
 import { setDataUser } from "../../config/redux/action";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import moment from 'moment';
 import { User } from "../../assets";
+import swal from "sweetalert";
 
 const UserProfile = () => {
   const { dataUser } = useSelector((state) => state.userReducer);
@@ -17,24 +17,23 @@ const UserProfile = () => {
   }, [dispatch]);  
 
   const logOut = () => {
-    confirmAlert({
-      title: "Confirm to Delete",
-      message:
-        "Apakah Anda Yakin ingin Keluar ?",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => {
-            // console.log(_id);
-            localStorage.clear()
-            window.location.reload();
-          },
-        },
-        {
-          label: "No",
-          onClick: () => alert("User Tidak Setuju"),
-        },
-      ],
+    swal({
+      title: "Keluar Akun ?",
+      text: "Jangan Khawatir!, semua data yang sudah diinput tidak akan hilang",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("Sampai jumpa!", {
+          icon: "success",
+        });
+        localStorage.clear()
+        window.location.reload();
+      } else {
+        swal("Anda masih nyaman dengan kami :)");
+      }
     });
   }
   return (
@@ -74,7 +73,7 @@ const UserProfile = () => {
             </table>
           </div>
           <Gap height={20} />
-          <Button title="Keluar"  onClick={logOut}/>
+          <Button title="Keluar" onClick={logOut} />
         </div>
       </div>
     );

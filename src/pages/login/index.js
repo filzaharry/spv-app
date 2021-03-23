@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { Button, Footer, Gap, Wave } from "../../component";
+import { Button, Footer, Gap, PassToggle, Wave } from "../../component";
 import { Logo } from "../../assets";
 import addNotification from "react-push-notification";
 import swal from "sweetalert";
 import Axios from "axios";
-import "./login.scss";
-import { API, LOCAL } from "../../config/utils/constants";
+import { LOCAL } from "../../config/utils/constants";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const history = useHistory();
@@ -14,6 +15,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState("");
+  const [PasswordInputType, ToggleIcon] = PassToggle();
 
 
   const ChangeUsername = (e) => {
@@ -44,7 +46,6 @@ const Login = () => {
           addNotification({
             title: "Selamat Datang Kembali !!!",
             message: result.data.message,
-            icon: "https://cdn.worldvectorlogo.com/logos/pwa-logo.svg",
             theme: "darkblue",
             native: true,
             duration: 30000,
@@ -54,6 +55,7 @@ const Login = () => {
       })
       .catch((e) => {
         // console.log(e.response.data.message);
+        toast(e.response.data.message)
         setError(e.response.data.message);
       });
   };
@@ -70,8 +72,8 @@ const Login = () => {
           <img src={Logo} alt="logo" width={200} />
           <Gap height={40} />
           {error && (
-          <div className="alert alert-danger">
-            <p>{error}</p>
+          <div>
+          <ToastContainer/>
           </div>
         )}
 
@@ -90,12 +92,13 @@ const Login = () => {
             <Gap height={20} />
             <label htmlFor="password">Password</label>
             <input
-              type="password"
+              type={PasswordInputType}
               className="form-control"
               id="password"
-              placeholder="password"
+              placeholder="Password"
               onChange={ChangePassword}
             />
+            <span className="password-toggle-icon">{ToggleIcon}</span>
             <small className="form-text text-muted">
               Lupa Password ? <Link to="/lupa-password">Klik disini</Link>
             </small>

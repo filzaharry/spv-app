@@ -7,6 +7,7 @@ import ValueUpdated from "./valueupdated";
 import FormPenilaian from "./formpenilaian";
 import FormScoreEdit from "./formpenilaian/edit";
 import Footer from './footer'
+import PassToggle from './passwordToggle'
 
 export {
   Sidebar,
@@ -17,5 +18,6 @@ export {
   FormPenilaian,
   FormScoreEdit,
   ValueUpdated,
-  Footer
+  Footer,
+  PassToggle
 };

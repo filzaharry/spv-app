@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Footer, Gap, Input, Wave } from "../../component";
+import { Button, Footer, Gap, PassToggle, Wave } from "../../component";
 import Axios from 'axios'
 import swal from "sweetalert";
 import addNotification from "react-push-notification";
-import { API, LOCAL } from "../../config/utils/constants";
+import { LOCAL } from "../../config/utils/constants";
 import Departemen from "./selectDep";
 import Jabatan from "./selectJab";
+import { toast, ToastContainer } from "react-toastify";
 
 const Register = () => {
   const history = useHistory();
@@ -16,8 +17,8 @@ const Register = () => {
   const[username, setUsername] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
-  const [alert, setAlert] = useState("");
   const[error, setError] = useState('');
+  const[PasswordInputType, ToggleIcon] = PassToggle();
 
   const onChangeNamaLengkap =(e)=> {
     const value = e.target.value;
@@ -88,6 +89,7 @@ const Register = () => {
         }
       })
       .catch((error) => {
+        toast(error.response.data.message)
         setError(error.response.data.message);
       });
   };
@@ -98,19 +100,9 @@ const Register = () => {
       <Wave />
       <div className="container">
         <div className="col-sm-12">
-          {/* { error && error ? (
-           <div className="alert alert-danger">
-           <p>{error}</p>
-          </div> 
-           ) : (
-            <div className="alert alert-success">
-            <p>{success}</p>
-           </div> 
-           )} */}
-
         {error && (
-          <div className="alert alert-danger">
-            <p>{error}</p>
+          <div>
+            <ToastContainer/>
           </div>
         )}
           <h3>Daftar User Baru</h3>
@@ -178,12 +170,13 @@ const Register = () => {
 
             <label htmlFor="password">Password</label>
             <input
-              type="password"
+              type={PasswordInputType}
               className="form-control"
               id="password"
               placeholder="Masukkan Password"
               onChange={onChangePassword}
-            />
+              />
+              <span className="password-toggle-icon">{ToggleIcon}</span>
             
             <Gap height={40} />
 

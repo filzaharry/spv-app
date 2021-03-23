@@ -14,17 +14,30 @@ const EmployeeList = () => {
   const { dataKaryawan } = useSelector((state) => state.karyawanReducer);
   const dispatch = useDispatch();
   const [mode, setMode] = useState('online');
+  const [search, setSearch] = useState("")
+  const [filterKaryawan, setFilterKaryawan] = useState([])
 
   useEffect(() => {
     dispatch(setDataKaryawan());
   }, [dispatch, setMode]);
+
+  useEffect(() => {
+    setFilterKaryawan(
+      dataKaryawan.filter((karyawan) =>
+        karyawan.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, dataKaryawan]);
 
   return (
     <div className="text-center">
       <Jumbotron jumbotronTitle="Daftar Karyawan Kontrak Outsourcing" />
       
       <form className="form-inline mx-auto search">
-        <input className="form-control" type="search" placeholder="Cari Karyawan" />
+
+        <input className="form-control" type="search" placeholder="Cari Karyawan" onChange={(e) => setSearch(e.target.value)} />
+
+
         <FontAwesomeIcon icon={faSearch} className="text-info icon-search"/>
       </form>
 <div>
@@ -34,7 +47,9 @@ const EmployeeList = () => {
     :null
   }
 </div>
-      {dataKaryawan.map((getKaryawanList, index) => (
+
+
+      {filterKaryawan.map((getKaryawanList, index) => (
           <div className="employee" onClick={()=> history.push(`karyawan/${getKaryawanList._id}`)}>
             <div className="row">
               <div className="image-profile">
