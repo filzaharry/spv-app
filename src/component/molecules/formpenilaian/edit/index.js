@@ -129,7 +129,7 @@ const FormScoreEdit = (props) => {
           type="checkbox"
           id="rekomendasi"
           onClick={valueRekomendasi}
-          value={!valueRekomendasi ? 0 : 0.5 }
+          value={!valueRekomendasi ? 0 : 5 }
           onChange={(e) => dispatch(setCreateNilaiSPV("rekomendasi", e.target.value))}
         />
         <label className="form-check-label font-s" htmlFor="confirmAccount">

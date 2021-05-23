@@ -10,10 +10,10 @@ import Help from "../help";
 import UserProfile from "../userProfile";
 
 const MainApp = () => {
-  // const token = localStorage.getItem('token')
-  // if(!token){
-  //   return <Redirect to="/login" />
-  // }
+  const token = localStorage.getItem('token')
+  if(!token){
+    return <Redirect to="/login" />
+  }
   return (
     <Router>
       <BottomNav />
